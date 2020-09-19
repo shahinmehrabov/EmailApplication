@@ -21,6 +21,7 @@ public class AppMenus {
         System.out.println("3. Quit\n");
         System.out.print("- Enter your choice: ");
         int choice = scan.nextInt();
+        System.out.println();
 
         switch (choice) {
             case 1:
@@ -32,10 +33,11 @@ public class AppMenus {
                 break;
             case 2:
                 // Register
+                new Register(emailApp);
                 break;
             case 3:
                 // Quit
-                System.out.println("\n- Good bye :)");
+                System.out.println("- Good bye :)");
                 break;
             default:
                 System.out.println("- Invalid input! Please try again.\n");
