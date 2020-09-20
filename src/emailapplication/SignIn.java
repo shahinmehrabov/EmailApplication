@@ -5,15 +5,12 @@ import java.util.Scanner;
 public class SignIn {
     private String email;
     private String password;
-    private int index;
     EmailApp emailApp;
-    private static int countEmail = 0;
-    private static int countPassword = 0;
+    Account account;
 
     // Constructor
     public SignIn(EmailApp emailApp) {
         this.emailApp = emailApp;
-        this.index = index;
     }
 
     // Start the process and return true or false
@@ -24,54 +21,44 @@ public class SignIn {
 
     // Check if email exists or not
     public boolean checkEmail(EmailApp emailApp, Scanner scan) {
-        System.out.print("\n> Email: ");
+        System.out.print("> Email: ");
         this.email = scan.nextLine();
 
         if(this.email.isEmpty()) {
             System.out.println("- Email field can not be empty! Please try again.\n");
             checkEmail(emailApp, scan);
         } else {
-            for (int i = 0; i < emailApp.accountsSize(); i++) {
-                    if(this.email.equals(emailApp.getAccount(i).getEmail())) {
-                        this.index = i;
-                        while (countPassword < 3) {
-                            if(checkPassword(emailApp, scan, index)) {
-                                return true;
-                            } else if(countPassword == 2) {
-                                System.out.println("- You tried 3 times. Process stopped.\n");
-                                return false;
-                            }
-                            countPassword++;
-                        }
-                    } else {
-                        System.out.println("- This email address is not exist. Please try again.\n");
-                        countEmail++;
-                        if(countEmail == 3) {
-                            System.out.println("- You tried 3 times. Process stopped.\n");
-                            return false;
-                        } else {
-                            checkEmail(emailApp, scan);
-                        }
-                    }
+            for(Account acc: emailApp.getAccounts()) {
+                if(this.email.equals(acc.getEmail())) {
+                    this.account = acc;
+                    return checkPassword(emailApp, scan, account);
+                }
             }
+            System.out.println("- This email address is not exist. Please try again.\n");
+            checkEmail(emailApp, scan);
         }
         return false;
     }
 
     // Check password match with email or not
-    public boolean checkPassword(EmailApp emailApp, Scanner scan, int index) {
+    public boolean checkPassword(EmailApp emailApp, Scanner scan, Account account) {
         System.out.print("> Password: ");
         this.password = scan.nextLine();
 
         if(this.password.isEmpty()) {
             System.out.println("- Password field can not be empty! Please try again.\n");
-            checkPassword(emailApp, scan, index);
-        } else if(this.password.equals(emailApp.getAccount(index).getPassword())){
+            checkPassword(emailApp, scan, account);
+        } else if(this.password.equals(account.getPassword())){
                 return true;
         } else {
             System.out.println("- Wrong password! Please try again.\n");
-            return false;
+            checkPassword(emailApp, scan, account);
         }
         return false;
+    }
+
+    // Get account index
+    public Account getAccount() {
+        return account;
     }
 }

@@ -48,7 +48,7 @@ public class Register {
             this.email += "@" + emailApp.getAppName().toLowerCase() + ".com";
 
             // Check if email exists or not
-            for(int i = 0; i < emailApp.accountsSize(); i++) {
+            for(int i = 0; i < emailApp.getAccountsSize(); i++) {
                 if(this.email.equals(emailApp.getAccount(i).getEmail())) {
                     System.out.println("- This email already exists. Please try again.\n");
                     createEmail(emailApp, scan);

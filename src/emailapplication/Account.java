@@ -1,5 +1,7 @@
 package emailapplication;
 
+import java.util.ArrayList;
+
 public class Account {
     private String email;
     private String password;
@@ -7,6 +9,8 @@ public class Account {
     private String firstName;
     private String lastName;
     private String birthDay;
+    private ArrayList<Mail> mailBox;
+    private ArrayList<Mail> trashBin;
 
     // Constructor
     public Account(String email, String password, String phoneNumber, String firstName, String lastName, String birthDay) {
@@ -16,6 +20,8 @@ public class Account {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDay = birthDay;
+        this.mailBox = new ArrayList<Mail>();
+        this.trashBin = new ArrayList<Mail>();
     }
 
     // Get and Set email
@@ -70,5 +76,39 @@ public class Account {
 
     public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
+    }
+
+    // Add, Delete Get mail
+    public void addMail(Mail mail) {
+        this.mailBox.add(mail);
+    }
+
+    public void deleteMail(int index) {
+        this.mailBox.remove(index);
+    }
+
+    public Mail getMail(int index) {
+        return this.mailBox.get(index);
+    }
+
+    // Get mailBox size
+    public int getMailBoxSize() {
+        return mailBox.size();
+    }
+
+    // Get trashBin size
+    public int getTrashBinSize() { return  trashBin.size(); }
+
+    // Add and Get mail from trashBin
+    public void addMailToTrashBin(Mail mail) {
+        this.trashBin.add(mail);
+    }
+
+    public Mail getMailFromTrashBin(int index) {
+        return this.trashBin.get(index);
+    }
+
+    public void removeMailFromTrashBin(int index) {
+        this.trashBin.remove(index);
     }
 }

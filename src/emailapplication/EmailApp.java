@@ -32,7 +32,22 @@ public class EmailApp {
     }
 
     // Get accounts size
-    public int accountsSize() {
+    public int getAccountsSize() {
         return this.accounts.size();
+    }
+
+    // Get account index with email
+    public int getAccountIndexWithEmail(String email) {
+        for(int i = 0; i < this.accounts.size(); i++) {
+            if(email.equals(accounts.get(i).getEmail())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Get accounts
+    public ArrayList<Account> getAccounts() {
+        return this.accounts;
     }
 }
