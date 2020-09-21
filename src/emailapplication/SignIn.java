@@ -31,7 +31,13 @@ public class SignIn {
             for(Account acc: emailApp.getAccounts()) {
                 if(this.email.equals(acc.getEmail())) {
                     this.account = acc;
-                    return checkPassword(emailApp, scan, account);
+                    boolean run = true;
+                    do {
+                        if(checkPassword(emailApp, scan, account)) {
+                            run = false;
+                            return true;
+                        }
+                    } while (run);
                 }
             }
             System.out.println("- This email address is not exist. Please try again.\n");

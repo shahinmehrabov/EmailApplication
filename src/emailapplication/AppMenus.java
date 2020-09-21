@@ -291,19 +291,24 @@ public class AppMenus {
 
         switch (command) {
             case 1:
-                changeFirstName(scan, account);
+                scan.nextLine();
+                changeFirstName(emailApp, scan, account);
                 break;
             case 2:
-                changeLastName(scan, account);
+                scan.nextLine();
+                changeLastName(emailApp, scan, account);
                 break;
             case 3:
-                changePassword(scan, account);
+                scan.nextLine();
+                changePassword(emailApp, scan, account);
                 break;
             case 4:
-                changePhoneNumber(scan, account);
+                scan.nextLine();
+                changePhoneNumber(emailApp, scan, account);
                 break;
             case 5:
-                changeBirthday(scan, account);
+                scan.nextLine();
+                changeBirthday(emailApp, scan, account);
                 break;
             case 6:
                 printAccountMenu(emailApp, scan, account);
@@ -316,74 +321,97 @@ public class AppMenus {
     }
 
     // Change firstName
-    public void changeFirstName(Scanner scan, Account account) {
+    public void changeFirstName(EmailApp emailApp, Scanner scan, Account account) {
         System.out.println("- Your current first name: " + account.getFirstName());
         System.out.print("> New first name: ");
         String firstName = scan.nextLine();
 
         while(firstName.isEmpty()) {
-            changeFirstName(scan, account);
+            System.out.println("- New first name field can not be empty! Please try again.\n");
+            changeFirstName(emailApp, scan, account);
         }
 
         account.setFirstName(firstName);
+        printAccountSettings(emailApp, scan, account);
     }
 
     // Change lastName
-    public void changeLastName(Scanner scan, Account account) {
-        System.out.println("- Your current last name: " + account.getFirstName());
+    public void changeLastName(EmailApp emailApp, Scanner scan, Account account) {
+        System.out.println("- Your current last name: " + account.getLastName());
         System.out.print("> New last name: ");
         String lastName = scan.nextLine();
 
         while(lastName.isEmpty()) {
-            changeFirstName(scan, account);
+            System.out.println("- New last name field can not be empty! Please try again.\n");
+            changeLastName(emailApp, scan, account);
         }
 
         account.setLastName(lastName);
+        printAccountSettings(emailApp, scan, account);
     }
 
     // Change password
-    public void changePassword(Scanner scan, Account account) {
+    public void changePassword(EmailApp emailApp, Scanner scan, Account account) {
         System.out.print("- Current password: ");
         String currentPassword = scan.nextLine();
         String newPassword = "";
 
-        while (currentPassword.isEmpty()) {
-            System.out.println("- Current password field can not be empty! Please try again.\n");
-            System.out.print("- Current password: ");
-            currentPassword = scan.nextLine();
+        if(currentPassword.isEmpty()) {
+                System.out.println("- Current password field can not be empty! Please try again.\n");
+                System.out.print("- Current password: ");
+                currentPassword = scan.nextLine();
 
+                if(currentPassword.equals(account.getPassword())) {
+                    System.out.print("> New password: ");
+                    newPassword = scan.nextLine();
+
+                    if(newPassword.isEmpty()) {
+                        System.out.println("- New password field can not be empty! Please try again.\n");
+                        changePassword(emailApp, scan, account);
+                    } else {
+                        account.setPassword(newPassword);
+                        printAccountSettings(emailApp, scan, account);
+                    }
+                } else {
+                    System.out.println("- Wrong password! Please try again.\n");
+                    changePassword(emailApp, scan, account);
+                }
+        } else {
             if(currentPassword.equals(account.getPassword())) {
                 System.out.print("> New password: ");
                 newPassword = scan.nextLine();
 
                 if(newPassword.isEmpty()) {
                     System.out.println("- New password field can not be empty! Please try again.\n");
-                    changePassword(scan, account);
+                    changePassword(emailApp, scan, account);
                 } else {
                     account.setPassword(newPassword);
+                    printAccountSettings(emailApp, scan, account);
                 }
             } else {
                 System.out.println("- Wrong password! Please try again.\n");
-                changePassword(scan, account);
+                changePassword(emailApp, scan, account);
             }
         }
     }
 
     // Change phoneNumber
-    public void changePhoneNumber(Scanner scan, Account account) {
+    public void changePhoneNumber(EmailApp emailApp, Scanner scan, Account account) {
         System.out.println("- Your current phone number: " + account.getPhoneNumber());
-        System.out.print("> New last name: ");
+        System.out.print("> New phone number: ");
         String phoneNumber = scan.nextLine();
 
         while(phoneNumber.isEmpty()) {
-            changePhoneNumber(scan, account);
+            System.out.println("- New phone number can not be empty. Please try again.\n");
+            changePhoneNumber(emailApp, scan, account);
         }
 
         account.setPhoneNumber(phoneNumber);
+        printAccountSettings(emailApp, scan, account);
     }
 
     // Change birthday
-    public void changeBirthday(Scanner scan, Account account) {
+    public void changeBirthday(EmailApp emailApp, Scanner scan, Account account) {
         System.out.println("- Your current birthday: " + account.getBirthDay());
         String day;
         String month;
@@ -420,5 +448,6 @@ public class AppMenus {
         } while(year.isEmpty());
 
         account.setBirthDay(day + "." + month + "." + year);
+        printAccountSettings(emailApp, scan, account);
     }
 }
