@@ -7,21 +7,29 @@ public class AppMenus {
 
     // Constructor
     public AppMenus(EmailApp emailApp) {
+        // New Scanner
         Scanner scan = new Scanner(System.in);
+
         this.emailApp = emailApp;
+
+        // Print mainMenu
         printMainMenu(emailApp, scan);
+
+        // Scanner close
+        scan.close();
     }
 
     // Print mainMenu
     public void printMainMenu(EmailApp emailApp, Scanner scan) {
+        // Print options
         System.out.println("\n--- WELCOME TO " + emailApp.getAppName().toUpperCase() + " ---\n");
         System.out.println("1. Sign in");
         System.out.println("2. Register");
-        System.out.println("3. Quit\n");
+        System.out.println("3. Quit app\n");
         System.out.print("> Command: ");
         int command = scan.nextInt();
-        System.out.println();
 
+        // Run command
         switch (command) {
             case 1:
                 // Login
@@ -35,7 +43,7 @@ public class AppMenus {
             case 3:
                 // Quit
                 System.out.println("- Good bye :)");
-                break;
+                System.exit(1);
             default:
                 System.out.println("- Invalid command! Please try again.\n");
                 break;
@@ -44,37 +52,45 @@ public class AppMenus {
 
     // Print accountMenu
     public void printAccountMenu(EmailApp emailApp, Scanner scan, Account account) {
+        // Print option
         System.out.println("\n--- ACCOUNT MENU ---\n");
         System.out.println("- Welcome, " + account.getFirstName() + " " + account.getLastName() + "\n");
         System.out.println("1. Mail box (" + account.getMailBoxSize() + ")");
         System.out.println("2. Send new mail");
         System.out.println("3. Trash bin");
         System.out.println("4. Account settings");
-        System.out.println("5. Log out");
+        System.out.println("5. Sign out");
         System.out.println("6. Quit app");
         System.out.print("\n> Command: ");
         int command = scan.nextInt();
 
+        // Run command
         switch (command) {
             case 1:
+                // Print mailBox
                 printMailBox(emailApp, scan, account);
                 break;
             case 2:
+                // Send new mail
                 sendNewMail(emailApp, scan, account);
                 break;
             case 3:
+                // Print trashBin
                 printTrashBin(emailApp, scan, account);
                 break;
             case 4:
+                // Print account settings
                 printAccountSettings(emailApp, scan, account);
                 break;
             case 5:
+                // Print main menu
                 printMainMenu(emailApp, scan);
                 break;
             case 6:
                 System.out.println("\n- Good bye :)");
-                break;
+                System.exit(1);
             default:
+                // Default
                 System.out.println("- Invalid command! Please try again.\n");
                 printAccountMenu(emailApp, scan, account);
                 break;
@@ -89,17 +105,20 @@ public class AppMenus {
             System.out.println((i + 1) + ". " + account.getMail(i).getTitle());
         }
 
+        // Print options
         System.out.println("\n1. Read mail");
         System.out.println("2. Go back");
         System.out.print("\n> Command: ");
         int command = scan.nextInt();
 
+        // Run command
         if(command == 1) {
             int mailIndex;
             do {
                 System.out.print("\n> Mail index: ");
                 mailIndex = scan.nextInt();
                 if(mailIndex <= account.getMailBoxSize() && mailIndex > 0) {
+                    // Print mail
                     System.out.print("From who: " + account.getMail(mailIndex - 1).getFromWho());
                     System.out.println("\tTo who: " + account.getMail(mailIndex - 1).getToWho());
                     System.out.println("Title: " + account.getMail(mailIndex - 1).getTitle());
@@ -107,12 +126,14 @@ public class AppMenus {
 
                     int mailCommand;
                     do {
+                        // Print options
                         System.out.println("\n1. Delete mail");
                         System.out.println("2. Reply");
                         System.out.println("3. Go back");
                         System.out.print("\n> Command: ");
                         mailCommand = scan.nextInt();
 
+                        // Run command
                         if(mailCommand == 1) {
                             account.addMailToTrashBin(account.getMail(mailIndex - 1));
                             account.deleteMail(mailIndex - 1);
@@ -201,18 +222,20 @@ public class AppMenus {
             System.out.println((i + 1) + ". " + account.getMailFromTrashBin(i).getTitle());
         }
 
+        // Print options
         System.out.println("\n1. Read mail");
         System.out.println("2. Recover mail");
         System.out.println("3. Delete mail permanently");
         System.out.println("4. Go back");
-        System.out.print("> Command: ");
+        System.out.print("\n> Command: ");
         int command = scan.nextInt();
-
         int mailIndex;
+
+        // Run command
         if(command == 1) {
 
             do {
-                System.out.print("> Mail index: ");
+                System.out.print("\n> Mail index: ");
                 mailIndex = scan.nextInt();
 
                 if(mailIndex <= account.getTrashBinSize() && mailIndex > 0) {
@@ -278,6 +301,8 @@ public class AppMenus {
     // Print account settings
     public void printAccountSettings(EmailApp emailApp, Scanner scan, Account account) {
         System.out.println("\n--- ACCOUNT SETTINGS ---\n");
+
+        // Print options
         System.out.println("1. Change first name");
         System.out.println("2. Change last name");
         System.out.println("3. Change password");
@@ -287,31 +312,40 @@ public class AppMenus {
         System.out.print("\n> Command: ");
         int command = scan.nextInt();
 
+        // Run command
         switch (command) {
             case 1:
+                // Change firstName
                 scan.nextLine();
                 changeFirstName(emailApp, scan, account);
                 break;
             case 2:
+                // Change lastName
                 scan.nextLine();
                 changeLastName(emailApp, scan, account);
                 break;
             case 3:
+                // Change password
                 scan.nextLine();
                 changePassword(emailApp, scan, account);
                 break;
             case 4:
+                // Change phoneNumber
                 scan.nextLine();
                 changePhoneNumber(emailApp, scan, account);
                 break;
             case 5:
+                // Change birthDay
                 scan.nextLine();
                 changeBirthday(emailApp, scan, account);
                 break;
             case 6:
+                // Print account menu
+                scan.nextLine();
                 printAccountMenu(emailApp, scan, account);
                 break;
-            case 7:
+            default:
+                scan.nextLine();
                 System.out.println("- Invalid command! Please try again.");
                 printAccountSettings(emailApp, scan, account);
                 break;
