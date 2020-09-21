@@ -107,19 +107,21 @@ public class AppMenus {
 
         // Print options
         System.out.println("\n1. Read mail");
-        System.out.println("2. Go back");
+        System.out.println("2. Delete mail");
+        System.out.println("3. Go back");
         System.out.print("\n> Command: ");
         int command = scan.nextInt();
+        int mailIndex;
 
         // Run command
         if(command == 1) {
-            int mailIndex;
             do {
                 System.out.print("\n> Mail index: ");
                 mailIndex = scan.nextInt();
                 if(mailIndex <= account.getMailBoxSize() && mailIndex > 0) {
                     // Print mail
-                    System.out.print("From who: " + account.getMail(mailIndex - 1).getFromWho());
+                    String replyEmail = account.getMail(mailIndex - 1).getFromWho();
+                    System.out.print("\nFrom who: " + account.getMail(mailIndex - 1).getFromWho());
                     System.out.println("\tTo who: " + account.getMail(mailIndex - 1).getToWho());
                     System.out.println("Title: " + account.getMail(mailIndex - 1).getTitle());
                     System.out.println("Text: " + account.getMail(mailIndex - 1).getText());
@@ -140,7 +142,8 @@ public class AppMenus {
                             System.out.println("- Mail deleted.");
                             printMailBox(emailApp, scan, account);
                         } else if(mailCommand == 2) {
-                            sendNewMail(emailApp, scan, account);
+                            scan.nextLine();
+                            replyMail(emailApp, scan, account, replyEmail);
                         } else if(mailCommand == 3) {
                             printMailBox(emailApp, scan, account);
                         }  else {
@@ -152,6 +155,19 @@ public class AppMenus {
                 }
             } while (mailIndex > account.getMailBoxSize() || mailIndex < 0);
         } else if(command == 2) {
+            do {
+                System.out.print("\n> Mail index: ");
+                mailIndex = scan.nextInt();
+                if(mailIndex <= account.getMailBoxSize() && mailIndex > 0) {
+                    account.addMailToTrashBin(account.getMail(mailIndex - 1));
+                    account.deleteMail(mailIndex - 1);
+                    System.out.println("- Mail deleted.");
+                    printMailBox(emailApp, scan, account);
+                } else {
+                    System.out.println("- Invalid index! Please try again.");
+                }
+            } while (mailIndex >= account.getMailBoxSize() || mailIndex < 0);
+        } else if(command == 3) {
             printAccountMenu(emailApp, scan, account);
         } else {
             System.out.println("- Invalid command! Please try again.\n");
@@ -363,6 +379,7 @@ public class AppMenus {
             changeFirstName(emailApp, scan, account);
         }
 
+        System.out.println("> Your new first name: " + firstName);
         account.setFirstName(firstName);
         printAccountSettings(emailApp, scan, account);
     }
@@ -378,6 +395,7 @@ public class AppMenus {
             changeLastName(emailApp, scan, account);
         }
 
+        System.out.println("> Your new last name: " + lastName);
         account.setLastName(lastName);
         printAccountSettings(emailApp, scan, account);
     }
@@ -390,7 +408,7 @@ public class AppMenus {
 
         if(currentPassword.isEmpty()) {
                 System.out.println("- Current password field can not be empty! Please try again.\n");
-                System.out.print("- Current password: ");
+                System.out.print("> Current password: ");
                 currentPassword = scan.nextLine();
 
                 if(currentPassword.equals(account.getPassword())) {
@@ -402,6 +420,11 @@ public class AppMenus {
                         changePassword(emailApp, scan, account);
                     } else {
                         account.setPassword(newPassword);
+                        String stars = "";
+                        for(int i = 0; i < account.getPassword().length(); i++) {
+                            stars += "*";
+                        }
+                        System.out.println("> Your new password: " + stars);
                         printAccountSettings(emailApp, scan, account);
                     }
                 } else {
@@ -418,6 +441,11 @@ public class AppMenus {
                     changePassword(emailApp, scan, account);
                 } else {
                     account.setPassword(newPassword);
+                    String stars = "";
+                    for(int i = 0; i < account.getPassword().length(); i++) {
+                        stars += "*";
+                    }
+                    System.out.println("> Your new password: " + stars);
                     printAccountSettings(emailApp, scan, account);
                 }
             } else {
@@ -438,6 +466,7 @@ public class AppMenus {
             changePhoneNumber(emailApp, scan, account);
         }
 
+        System.out.println("> Your new phone number: " + phoneNumber);
         account.setPhoneNumber(phoneNumber);
         printAccountSettings(emailApp, scan, account);
     }
@@ -479,7 +508,42 @@ public class AppMenus {
             }
         } while(year.isEmpty());
 
+        System.out.println("> Your new birthday: " + account.getBirthDay());
         account.setBirthDay(day + "." + month + "." + year);
         printAccountSettings(emailApp, scan, account);
+    }
+
+    // Send new mail
+    public void replyMail(EmailApp emailApp, Scanner scan, Account account, String replyEmail) {
+        String title;
+        String text;
+        boolean runToWho = false;
+
+        // Print to who
+        System.out.println("\n> To who: " + replyEmail);
+
+        // Get title and prevent empty input
+        do {
+            System.out.print("> Title: ");
+            title = scan.nextLine();
+
+            if(title.isEmpty()) {
+                System.out.println("- Title field can not be empty! Please try again.");
+            }
+        } while (title.isEmpty());
+
+        // Get text and prevent empty input
+        do {
+            System.out.print("> Text: ");
+            text = scan.nextLine();
+
+            if(text.isEmpty()) {
+                System.out.println("- Text field can not be empty! Please try again.\n");
+            }
+        } while (text.isEmpty());
+
+        emailApp.getAccount(emailApp.getAccountIndexWithEmail(replyEmail)).addMail(new Mail(account.getEmail(), replyEmail, title, text));
+        System.out.println("\n- Mail sent.");
+        printAccountMenu(emailApp, scan, account);
     }
 }

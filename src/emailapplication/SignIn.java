@@ -36,7 +36,7 @@ public class SignIn {
             }
 
             if(!checkEmail) {
-                System.out.println("- This email does not exist! Please try again.\n");
+                System.out.println("- This email does not exist! Please try again.");
                 checkEmail(emailApp, scan);
             }
         }
