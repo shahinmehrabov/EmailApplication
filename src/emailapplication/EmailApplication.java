@@ -9,6 +9,7 @@ public class EmailApplication {
         emailApp.addAccount(shahin);
         emailApp.addAccount(mehrabov);
         emailApp.addAccount(musa);
+        emailApp.addAdmin(shahin);
         new AppMenus(emailApp);
     }
 }

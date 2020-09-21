@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class SignIn {
     private String email;
     private String password;
+    private boolean adminOrNot = false;
     EmailApp emailApp;
     Account account;
 
@@ -32,6 +33,12 @@ public class SignIn {
                 if(email.equals(account.getEmail())) {
                     checkEmail = true;
                     this.account = account;
+                }
+            }
+
+            for(Account account: emailApp.getAdmins()) {
+                if(email.equals(account.getEmail())) {
+                    adminOrNot = true;
                 }
             }
 
@@ -63,5 +70,10 @@ public class SignIn {
     // Get account index
     public Account getAccount() {
         return account;
+    }
+
+    // Return admin or not
+    public boolean AdminOrNot() {
+        return adminOrNot;
     }
 }

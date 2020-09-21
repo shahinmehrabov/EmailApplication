@@ -34,7 +34,11 @@ public class AppMenus {
             case 1:
                 // Login
                 SignIn signIn = new SignIn(emailApp);
-                printAccountMenu(emailApp, scan, signIn.getAccount());
+                if(signIn.AdminOrNot()) {
+                    printAdminMenu(emailApp, scan, signIn.getAccount());
+                } else {
+                    printAccountMenu(emailApp, scan, signIn.getAccount());
+                }
                 break;
             case 2:
                 // Register
@@ -94,6 +98,109 @@ public class AppMenus {
                 System.out.println("- Invalid command! Please try again.\n");
                 printAccountMenu(emailApp, scan, account);
                 break;
+        }
+    }
+
+    // Print adminMenu
+    public void printAdminMenu(EmailApp emailApp, Scanner scan, Account account) {
+        // Print option
+        System.out.println("\n--- ACCOUNT MENU ---\n");
+        System.out.println("- Welcome, " + account.getFirstName() + " " + account.getLastName() + "\n");
+        System.out.println("1. Mail box (" + account.getMailBoxSize() + ")");
+        System.out.println("2. Send new mail");
+        System.out.println("3. Trash bin");
+        System.out.println("4. Account settings");
+        System.out.println("5. Admin panel");
+        System.out.println("6. Sign out");
+        System.out.println("7. Quit app");
+        System.out.print("\n> Command: ");
+        int command = scan.nextInt();
+
+        // Run command
+        switch (command) {
+            case 1:
+                // Print mailBox
+                printMailBox(emailApp, scan, account);
+                break;
+            case 2:
+                // Send new mail
+                sendNewMail(emailApp, scan, account);
+                break;
+            case 3:
+                // Print trashBin
+                printTrashBin(emailApp, scan, account);
+                break;
+            case 4:
+                // Print account settings
+                printAccountSettings(emailApp, scan, account);
+                break;
+            case 5:
+                // Print admin panel
+                printAdminPanel(emailApp, scan, account);
+                break;
+            case 6:
+                // Print main menu
+                printMainMenu(emailApp, scan);
+                break;
+            case 7:
+                System.out.println("\n- Good bye :)");
+                System.exit(1);
+            default:
+                // Default
+                System.out.println("- Invalid command! Please try again.\n");
+                printAdminMenu(emailApp, scan, account);
+                break;
+        }
+    }
+
+    //Print admin panel
+    public void printAdminPanel(EmailApp emailApp, Scanner scan, Account account) {
+        System.out.println("\n--- ADMIN PANEL ---\n");
+        System.out.println("1. Users");
+        System.out.println("2. Admins");
+        System.out.println("3. Go back");
+        System.out.print("\n> Command: ");
+        int command = scan.nextInt();
+
+        if(command == 1) {
+            System.out.println("\n- List of users\n");
+            for(int i = 0; i < emailApp.getAccountsSize(); i++) {
+                System.out.println((i+1) + ". " + emailApp.getAccount(i).getEmail());
+            }
+
+            System.out.println("\n1. Delete account");
+            System.out.println("2. Go back");
+            System.out.print("\n> Command: ");
+            int usersCommand = scan.nextInt();
+
+            if(usersCommand == 1) {
+                System.out.print("\nEnter index: ");
+                int userIndex = scan.nextInt();
+                if(userIndex > 0 && userIndex < emailApp.getAccountsSize()) {
+                    emailApp.removeAccount(userIndex - 1);
+                    printAdminPanel(emailApp, scan, account);
+                } else {
+                    System.out.println("- Invalid command! Please try again.");
+                    printAdminPanel(emailApp, scan, account);
+                }
+            } else if(usersCommand == 2) {
+                printAdminPanel(emailApp, scan, account);
+            } else {
+                System.out.println("- Invalid command! Please try again.");
+                printAdminPanel(emailApp, scan, account);
+            }
+        } else if(command == 2) {
+            System.out.println("\n- List of admins\n");
+            for(int i = 0; i < emailApp.getAdminsSize(); i++) {
+                System.out.println((i+1) + ". " + emailApp.getAccount(i).getEmail());
+            }
+            System.out.println();
+            printAdminPanel(emailApp, scan, account);
+        } else if(command ==3) {
+            printAdminMenu(emailApp, scan, account);
+        } else {
+            System.out.println("- Invalid command! Please try again.");
+            printAdminPanel(emailApp, scan, account);
         }
     }
 
