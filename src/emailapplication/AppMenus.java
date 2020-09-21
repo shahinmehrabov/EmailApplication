@@ -26,9 +26,7 @@ public class AppMenus {
             case 1:
                 // Login
                 SignIn signIn = new SignIn(emailApp);
-                if(signIn.startProcess(emailApp)) {
-                    printAccountMenu(emailApp, scan, signIn.getAccount());
-                }
+                printAccountMenu(emailApp, scan, signIn.getAccount());
                 break;
             case 2:
                 // Register
