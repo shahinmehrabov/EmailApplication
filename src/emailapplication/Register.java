@@ -24,7 +24,7 @@ public class Register {
         account = new Account(this.email, this.password, this.phoneNumber, this.firstName, this.lastName, this.birthDay);
         emailApp.addAccount(account);
 
-        System.out.println("\n- Account is successfully created");
+        System.out.println("\n- Account is successfully created\n");
         System.out.println("> Email: " + this.email);
         System.out.println("> Password: " + printPasswordStars());
         System.out.println("> Phone number: " + this.phoneNumber);

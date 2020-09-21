@@ -68,11 +68,13 @@ public class AppMenus {
                 printTrashBin(emailApp, scan, account);
                 break;
             case 4:
+                printAccountSettings(emailApp, scan, account);
+                break;
             case 5:
                 printMainMenu(emailApp, scan);
                 break;
             case 6:
-                System.out.println("- Good bye :)");
+                System.out.println("\n- Good bye :)");
                 break;
             default:
                 System.out.println("- Invalid command! Please try again.\n");
@@ -273,5 +275,150 @@ public class AppMenus {
             System.out.println("- Invalid command! Please try again.\n");
             printTrashBin(emailApp, scan, account);
         }
+    }
+
+    // Print account settings
+    public void printAccountSettings(EmailApp emailApp, Scanner scan, Account account) {
+        System.out.println("\n--- ACCOUNT SETTINGS ---\n");
+        System.out.println("1. Change first name");
+        System.out.println("2. Change last name");
+        System.out.println("3. Change password");
+        System.out.println("4. Change phone number");
+        System.out.println("5. Change birthday");
+        System.out.println("6. Go back");
+        System.out.print("\n> Command: ");
+        int command = scan.nextInt();
+
+        switch (command) {
+            case 1:
+                changeFirstName(scan, account);
+                break;
+            case 2:
+                changeLastName(scan, account);
+                break;
+            case 3:
+                changePassword(scan, account);
+                break;
+            case 4:
+                changePhoneNumber(scan, account);
+                break;
+            case 5:
+                changeBirthday(scan, account);
+                break;
+            case 6:
+                printAccountMenu(emailApp, scan, account);
+                break;
+            case 7:
+                System.out.println("- Invalid command! Please try again.");
+                printAccountSettings(emailApp, scan, account);
+                break;
+        }
+    }
+
+    // Change firstName
+    public void changeFirstName(Scanner scan, Account account) {
+        System.out.println("- Your current first name: " + account.getFirstName());
+        System.out.print("> New first name: ");
+        String firstName = scan.nextLine();
+
+        while(firstName.isEmpty()) {
+            changeFirstName(scan, account);
+        }
+
+        account.setFirstName(firstName);
+    }
+
+    // Change lastName
+    public void changeLastName(Scanner scan, Account account) {
+        System.out.println("- Your current last name: " + account.getFirstName());
+        System.out.print("> New last name: ");
+        String lastName = scan.nextLine();
+
+        while(lastName.isEmpty()) {
+            changeFirstName(scan, account);
+        }
+
+        account.setLastName(lastName);
+    }
+
+    // Change password
+    public void changePassword(Scanner scan, Account account) {
+        System.out.print("- Current password: ");
+        String currentPassword = scan.nextLine();
+        String newPassword = "";
+
+        while (currentPassword.isEmpty()) {
+            System.out.println("- Current password field can not be empty! Please try again.\n");
+            System.out.print("- Current password: ");
+            currentPassword = scan.nextLine();
+
+            if(currentPassword.equals(account.getPassword())) {
+                System.out.print("> New password: ");
+                newPassword = scan.nextLine();
+
+                if(newPassword.isEmpty()) {
+                    System.out.println("- New password field can not be empty! Please try again.\n");
+                    changePassword(scan, account);
+                } else {
+                    account.setPassword(newPassword);
+                }
+            } else {
+                System.out.println("- Wrong password! Please try again.\n");
+                changePassword(scan, account);
+            }
+        }
+    }
+
+    // Change phoneNumber
+    public void changePhoneNumber(Scanner scan, Account account) {
+        System.out.println("- Your current phone number: " + account.getPhoneNumber());
+        System.out.print("> New last name: ");
+        String phoneNumber = scan.nextLine();
+
+        while(phoneNumber.isEmpty()) {
+            changePhoneNumber(scan, account);
+        }
+
+        account.setPhoneNumber(phoneNumber);
+    }
+
+    // Change birthday
+    public void changeBirthday(Scanner scan, Account account) {
+        System.out.println("- Your current birthday: " + account.getBirthDay());
+        String day;
+        String month;
+        String year;
+
+        do {
+            System.out.print("> Day (1 - 31): ");
+            day = scan.nextLine();
+
+            // Prevent empty day input
+            if(day.isEmpty()) {
+                System.out.println("- Day field can not be empty! Please try again.\n");
+            }
+        } while(day.isEmpty());
+
+        do {
+            System.out.print("> Month (1-12): ");
+            month = scan.nextLine();
+
+            // Prevent empty day input
+            if(month.isEmpty()) {
+                System.out.println("- Month field can not be empty! Please try again.\n");
+            }
+        } while(month.isEmpty());
+
+        do {
+            System.out.print("> Year: ");
+            year = scan.nextLine();
+
+            // Prevent empty day input
+            if(year.isEmpty()) {
+                System.out.println("- Year field can not be empty! Please try again.\n");
+            }
+        } while(year.isEmpty());
+
+        account.setBirthDay(day + "." + month + "." + year);
     }
 }
