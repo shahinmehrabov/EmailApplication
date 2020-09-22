@@ -12,6 +12,8 @@ public class Account {
     private ArrayList<Mail> mailBox;
     private ArrayList<Mail> trashBin;
 
+    /* ------------------------------------------------------------ */
+
     // Constructor
     public Account(String email, String password, String phoneNumber, String firstName, String lastName, String birthDay) {
         this.email = email;
@@ -24,72 +26,96 @@ public class Account {
         this.trashBin = new ArrayList<Mail>();
     }
 
-    // Get and Set email
+    /* ------------------------------------------------------------ */
+
+    // Get email
     public String getEmail() {
         return email;
     }
 
+    // Set email
     public void setEmail(String email) {
         this.email = email;
     }
 
-    // Get and Set password
+    /* ------------------------------------------------------------ */
+
+    // Get password
     public String getPassword() {
         return password;
     }
 
+    // Set password
     public void setPassword(String password) {
         this.password = password;
     }
 
-    // Get and Set phoneNumber
+    /* ------------------------------------------------------------ */
+
+    // Get phoneNumber
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    // Set phoneNumber
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    // Get and Set firstName
+    /* ------------------------------------------------------------ */
+
+    // Get firstName
     public String getFirstName() {
         return firstName;
     }
 
+    // Set firstName
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    // Get and Set lastName
+    /* ------------------------------------------------------------ */
+
+    // Get lastName
     public String getLastName() {
         return lastName;
     }
 
+    // Set lastName
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    // Get and Set birthDay
+    /* ------------------------------------------------------------ */
+
+    // Get birthDay
     public String getBirthDay() {
         return birthDay;
     }
 
+    // Set birthDay
     public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
 
-    // Add, Delete Get mail
+    /* ------------------------------------------------------------ */
+
+    // Add mail to mailBox
     public void addMail(Mail mail) {
         this.mailBox.add(mail);
     }
 
+    // Delete mail from mailBox
     public void deleteMail(int index) {
         this.mailBox.remove(index);
     }
 
+    // get mail from mailBox with index
     public Mail getMail(int index) {
         return this.mailBox.get(index);
     }
+
+    /* ------------------------------------------------------------ */
 
     // Get mailBox size
     public int getMailBoxSize() {
@@ -99,16 +125,22 @@ public class Account {
     // Get trashBin size
     public int getTrashBinSize() { return  trashBin.size(); }
 
-    // Add and Get mail from trashBin
+    /* ------------------------------------------------------------ */
+
+    // Add mail to trashBin
     public void addMailToTrashBin(Mail mail) {
         this.trashBin.add(mail);
     }
 
+    // Get mail from trashBin
     public Mail getMailFromTrashBin(int index) {
         return this.trashBin.get(index);
     }
 
+    // Remove mail from trashBin
     public void removeMailFromTrashBin(int index) {
         this.trashBin.remove(index);
     }
+
+    /* ------------------------------------------------------------ */
 }

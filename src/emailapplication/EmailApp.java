@@ -8,6 +8,8 @@ public class EmailApp {
     private ArrayList<Account> admins;
     private int accountIndex;
 
+    /* ------------------------------------------------------------ */
+
     // Constructor
     public EmailApp(String appName) {
         this.appName = appName;
@@ -15,27 +17,36 @@ public class EmailApp {
         this.admins = new ArrayList<>();
     }
 
-    // Get and Set appName
+    /* ------------------------------------------------------------ */
+
+    // Get appName
     public String getAppName() {
         return appName;
     }
 
+    // Set appName
     public void setAppName(String appName) {
         this.appName = appName;
     }
 
-    // Add, Remove and Get account
+    /* ------------------------------------------------------------ */
+
+    // Add account to ArrayList
     public void addAccount(Account account) {
         this.accounts.add(account);
     }
 
+    // Remove account from ArrayList
     public void removeAccount(int index) {
         this.accounts.remove(index);
     }
 
+    // Get account from ArrayList with index
     public Account getAccount(int index) {
         return accounts.get(index);
     }
+
+    /* ------------------------------------------------------------ */
 
     // Get accounts size
     public int getAccountsSize() {
@@ -52,10 +63,12 @@ public class EmailApp {
         return -1;
     }
 
-    // Get accounts
+    // Get accounts ArrayList
     public ArrayList<Account> getAccounts() {
         return this.accounts;
     }
+
+    /* ------------------------------------------------------------ */
 
     // Add admin
     public void addAdmin(Account account) {
@@ -71,4 +84,6 @@ public class EmailApp {
     public int getAdminsSize() {
         return this.admins.size();
     }
+
+    /* ------------------------------------------------------------ */
 }

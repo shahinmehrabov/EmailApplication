@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class AppMenus {
     EmailApp emailApp;
 
+    /* ------------------------------------------------------------ */
+
     // Constructor
     public AppMenus(EmailApp emailApp) {
         // New Scanner
@@ -48,6 +50,9 @@ public class AppMenus {
                 System.exit(1);
             default:
                 System.out.println("- Invalid command! Please try again.\n");
+
+                // Recursion
+                printMainMenu(emailApp, scan);
                 break;
         }
     }
@@ -100,6 +105,8 @@ public class AppMenus {
                 default:
                     // Default
                     System.out.println("- Invalid command! Please try again.\n");
+
+                    // Recursion
                     printAccountMenu(emailApp, scan, account, admin);
                     break;
             }
@@ -144,6 +151,8 @@ public class AppMenus {
                 default:
                     // Default
                     System.out.println("- Invalid command! Please try again.\n");
+
+                    // Recursion
                     printAccountMenu(emailApp, scan, account, admin);
                     break;
             }
@@ -162,13 +171,18 @@ public class AppMenus {
         int command = scan.nextInt();
 
         if(command == 1) {
+            // Print users list
             printUsers(emailApp, scan, account, admin);
         } else if(command == 2) {
+            // Print admins list
             printAdmins(emailApp, scan, account, admin);
         } else if(command ==3) {
+            // Print account menu
             printAccountMenu(emailApp, scan, account, admin);
         } else {
             System.out.println("- Invalid command! Please try again.");
+
+            // Recursion
             printAdminPanel(emailApp, scan, account, admin);
         }
     }
@@ -186,11 +200,14 @@ public class AppMenus {
         int usersCommand = scan.nextInt();
 
         if(usersCommand == 1) {
+            // Remove account
             removeAccount(emailApp, scan, account, admin);
         } else if(usersCommand == 2) {
+            // Print account menu
             printAccountMenu(emailApp, scan, account, admin);
         } else {
             System.out.println("- Invalid command! Please try again.");
+            // Recursion
             printUsers(emailApp, scan, account, admin);
         }
     }
@@ -202,6 +219,8 @@ public class AppMenus {
             System.out.println((i+1) + ". " + emailApp.getAccount(i).getEmail());
         }
         System.out.println();
+
+        // Print admin panel
         printAdminPanel(emailApp, scan, account, admin);
     }
 
@@ -214,10 +233,15 @@ public class AppMenus {
             userIndex = scan.nextInt();
 
             if(userIndex > 0 && userIndex < emailApp.getAccountsSize()) {
+                // Remove account
                 emailApp.removeAccount(userIndex - 1);
+
+                // Print users list
                 printUsers(emailApp, scan, account, admin);
             } else {
                 System.out.println("- Invalid command! Please try again.");
+
+                // Recursion
                 removeAccount(emailApp, scan, account, admin);
             }
         }
@@ -243,13 +267,18 @@ public class AppMenus {
 
         // Run command
         if(command == 1) {
+            // Read mail
             readMail(emailApp, scan, account, admin);
         } else if(command == 2) {
+            // Delete mail
             deleteMail(emailApp, scan, account, admin);
         } else if(command == 3) {
+            // Print account menu
             printAccountMenu(emailApp, scan, account, admin);
         } else {
             System.out.println("- Invalid command! Please try again.\n");
+
+            // Recursion
             printMailBox(emailApp, scan, account, admin);
         }
 
@@ -281,14 +310,19 @@ public class AppMenus {
 
                     // Run command
                     if(mailCommand == 1) {
+                        // Delete process
                         account.addMailToTrashBin(account.getMail(mailIndex - 1));
                         account.deleteMail(mailIndex - 1);
                         System.out.println("- Mail deleted.");
+
+                        // Print mailBox
                         printMailBox(emailApp, scan, account, admin);
                     } else if(mailCommand == 2) {
                         scan.nextLine();
+                        // Reply mail
                         replyMail(emailApp, scan, account, replyEmail, admin);
                     } else if(mailCommand == 3) {
+                        // Print mailBox
                         printMailBox(emailApp, scan, account, admin);
                     }  else {
                         System.out.println("- Invalid command! Please try again.\n");
@@ -307,6 +341,7 @@ public class AppMenus {
             System.out.print("\n> Mail index: ");
             mailIndex = scan.nextInt();
             if(mailIndex <= account.getMailBoxSize() && mailIndex > 0) {
+                // Delete process
                 account.addMailToTrashBin(account.getMail(mailIndex - 1));
                 account.deleteMail(mailIndex - 1);
                 System.out.println("- Mail deleted.");
@@ -369,6 +404,8 @@ public class AppMenus {
 
         emailApp.getAccount(emailApp.getAccountIndexWithEmail(toWho)).addMail(new Mail(account.getEmail(), toWho, title, text));
         System.out.println("\n- Mail sent.");
+
+        // Print account menu
         printAccountMenu(emailApp, scan, account, admin);
     }
 
@@ -402,6 +439,8 @@ public class AppMenus {
 
         emailApp.getAccount(emailApp.getAccountIndexWithEmail(replyEmail)).addMail(new Mail(account.getEmail(), replyEmail, title, text));
         System.out.println("\n- Mail sent.");
+
+        // Print account menu
         printAccountMenu(emailApp, scan, account, admin);
     }
 
@@ -426,15 +465,20 @@ public class AppMenus {
 
         // Run command
         if(command == 1) {
+            // Read mail from trash bin
             readTrashMail(emailApp, scan, account, admin);
         } else if(command == 2) {
+            // Recover mail
             recoverMail(emailApp, scan, account, admin);
         } else if(command == 3) {
+            // Delete mail permanently
             deleteMailPermanently(emailApp, scan, account, admin);
         } else if(command == 4) {
+            // Print account menu
             printAccountMenu(emailApp, scan, account, admin);
         } else {
             System.out.println("- Invalid command! Please try again.\n");
+            // Recursion
             printTrashBin(emailApp, scan, account, admin);
         }
     }
@@ -459,6 +503,7 @@ public class AppMenus {
                     mailCommand = scan.nextInt();
 
                     if(mailCommand == 1) {
+                        // Print trash bin
                         printTrashBin(emailApp, scan, account, admin);
                     } else {
                         System.out.println("- Invalid command! Please try again.\n");
@@ -486,6 +531,8 @@ public class AppMenus {
         account.addMail(account.getMailFromTrashBin(mailIndex - 1));
         account.removeMailFromTrashBin(mailIndex - 1);
         System.out.println("- Mail recovered.");
+
+        // Print trash bin
         printTrashBin(emailApp, scan, account, admin);
     }
 
@@ -504,6 +551,8 @@ public class AppMenus {
 
         account.removeMailFromTrashBin(mailIndex - 1);
         System.out.println("- Mail deleted permanently.");
+
+        // Print trash bin
         printTrashBin(emailApp, scan, account, admin);
     }
 
@@ -558,6 +607,8 @@ public class AppMenus {
             default:
                 scan.nextLine();
                 System.out.println("- Invalid command! Please try again.");
+
+                // Recursion
                 printAccountSettings(emailApp, scan, account, admin);
                 break;
         }
@@ -576,6 +627,8 @@ public class AppMenus {
 
         System.out.println("> Your new first name: " + firstName);
         account.setFirstName(firstName);
+
+        // Print account settings
         printAccountSettings(emailApp, scan, account, admin);
     }
 
@@ -592,6 +645,8 @@ public class AppMenus {
 
         System.out.println("> Your new last name: " + lastName);
         account.setLastName(lastName);
+
+        // Print account settings
         printAccountSettings(emailApp, scan, account, admin);
     }
 
@@ -620,10 +675,14 @@ public class AppMenus {
                             stars += "*";
                         }
                         System.out.println("> Your new password: " + stars);
+
+                        // Print account settings
                         printAccountSettings(emailApp, scan, account, admin);
                     }
                 } else {
                     System.out.println("- Wrong password! Please try again.\n");
+
+                    // Recursion
                     changePassword(emailApp, scan, account, admin);
                 }
         } else {
@@ -633,6 +692,8 @@ public class AppMenus {
 
                 if(newPassword.isEmpty()) {
                     System.out.println("- New password field can not be empty! Please try again.\n");
+
+                    // Recursion
                     changePassword(emailApp, scan, account, admin);
                 } else {
                     account.setPassword(newPassword);
@@ -641,10 +702,14 @@ public class AppMenus {
                         stars += "*";
                     }
                     System.out.println("> Your new password: " + stars);
+
+                    // Print account settings
                     printAccountSettings(emailApp, scan, account, admin);
                 }
             } else {
                 System.out.println("- Wrong password! Please try again.\n");
+
+                // Recursion
                 changePassword(emailApp, scan, account, admin);
             }
         }
@@ -658,11 +723,15 @@ public class AppMenus {
 
         while(phoneNumber.isEmpty()) {
             System.out.println("- New phone number can not be empty. Please try again.\n");
+
+            // Recursion
             changePhoneNumber(emailApp, scan, account, admin);
         }
 
         System.out.println("> Your new phone number: " + phoneNumber);
         account.setPhoneNumber(phoneNumber);
+
+        // Print account settings
         printAccountSettings(emailApp, scan, account, admin);
     }
 
@@ -705,6 +774,8 @@ public class AppMenus {
 
         System.out.println("> Your new birthday: " + account.getBirthDay());
         account.setBirthDay(day + "." + month + "." + year);
+
+        /// Print account settings
         printAccountSettings(emailApp, scan, account, admin);
     }
 

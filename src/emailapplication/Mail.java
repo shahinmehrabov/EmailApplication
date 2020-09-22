@@ -6,6 +6,8 @@ public class Mail {
     private String title;
     private String text;
 
+    /* ------------------------------------------------------------ */
+
     public Mail(String fromWho, String toWho, String title, String text) {
         this.fromWho = fromWho;
         this.toWho = toWho;
@@ -13,39 +15,53 @@ public class Mail {
         this.text = text;
     }
 
-    // Get and Set fromWho
+    /* ------------------------------------------------------------ */
+
+    // Get fromWho
     public String getFromWho() {
         return fromWho;
     }
 
+    // Set fromWho
     public void setFromWho(String fromWho) {
         this.fromWho = fromWho;
     }
 
-    // Get and Set toWho
+    /* ------------------------------------------------------------ */
+
+    // Get toWho
     public String getToWho() {
         return toWho;
     }
 
+    // Set toWho
     public void setToWho(String toWho) {
         this.toWho = toWho;
     }
 
-    // Get and Set title
+    /* ------------------------------------------------------------ */
+
+    // Get title
     public String getTitle() {
         return title;
     }
 
+    // Set title
     public void setTitle(String title) {
         this.title = title;
     }
 
-    // Get and Set text
+    /* ------------------------------------------------------------ */
+
+    // Get text
     public String getText() {
         return text;
     }
 
+    // Set text
     public void setText(String text) {
         this.text = text;
     }
+
+    /* ------------------------------------------------------------ */
 }

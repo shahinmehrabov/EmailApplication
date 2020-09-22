@@ -11,19 +11,34 @@ public class Register {
     private String birthDay;
     private Account account;
 
+    /* ------------------------------------------------------------ */
+
     public Register(EmailApp emailApp) {
         Scanner scan = new Scanner(System.in);
 
+        // Get email from user
         createEmail(emailApp, scan);
+
+        // Get password from user
         createPassword(emailApp, scan);
+
+        // Get phone number from user
         createPhoneNumber(emailApp, scan);
+
+        // Get first name from user
         createFirstName(emailApp, scan);
+
+        // Get last name from user
         createLastName(emailApp, scan);
+
+        // Get birthday from user
         createBirthDay(emailApp, scan);
 
+        // Create and add new account
         account = new Account(this.email, this.password, this.phoneNumber, this.firstName, this.lastName, this.birthDay);
         emailApp.addAccount(account);
 
+        // Print account info after registration process
         System.out.println("\n- Account is successfully created\n");
         System.out.println("> Email: " + this.email);
         System.out.println("> Password: " + printPasswordStars());
@@ -35,7 +50,9 @@ public class Register {
         new AppMenus(emailApp);
     }
 
-    // Create, Get and Set email
+    /* ------------------------------------------------------------ */
+
+    // Create email
     public void createEmail(EmailApp emailApp, Scanner scan) {
         System.out.print("> Email: ");
         this.email = scan.nextLine();
@@ -51,21 +68,27 @@ public class Register {
             for(int i = 0; i < emailApp.getAccountsSize(); i++) {
                 if(this.email.equals(emailApp.getAccount(i).getEmail())) {
                     System.out.println("- This email already exists. Please try again.\n");
+
+                    // Recursion
                     createEmail(emailApp, scan);
                 }
             }
         }
     }
 
+    // Get email
     public String getEmail() {
         return email;
     }
 
+    // Set email
     public void setEmail(String email) {
         this.email = email;
     }
 
-    // Get and Set password
+    /* ------------------------------------------------------------ */
+
+    // Create password
     public void createPassword(EmailApp emailApp, Scanner scan) {
         System.out.print("> Password: ");
         this.password = scan.nextLine();
@@ -73,19 +96,25 @@ public class Register {
         // Prevents empty input
         if(this.password.isEmpty()) {
             System.out.println("- Password field can not be empty! Please try again.\n");
+
+            // Recursion
             createPassword(emailApp, scan);
         }
     }
 
+    // Get password
     public String getPassword() {
         return password;
     }
 
+    // Set password
     public void setPassword(String password) {
         this.password = password;
     }
 
-    // Get and Set phoneNumber
+    /* ------------------------------------------------------------ */
+
+    // Create phoneNumber
     public void createPhoneNumber(EmailApp emailApp, Scanner scan) {
         System.out.print("> Phone number: ");
         this.phoneNumber = scan.nextLine();
@@ -93,20 +122,26 @@ public class Register {
         // Prevents empty input
         if(this.phoneNumber.isEmpty()) {
             System.out.println("- Phone number field can not be empty! Please try again.\n");
+
+            // Recursion
             createPhoneNumber(emailApp, scan);
         }
 
     }
 
+    // Get phone number
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    // Set phone number
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    // Get and Set firstName
+    /* ------------------------------------------------------------ */
+
+    // Create first name
     public void createFirstName(EmailApp emailApp, Scanner scan) {
         System.out.print("> Firstname: ");
         this.firstName = scan.nextLine();
@@ -114,19 +149,25 @@ public class Register {
         // Prevents empty input
         if(this.firstName.isEmpty()) {
             System.out.println("- Firstname field can not be empty! Please try again.\n");
+
+            // Recursion
             createFirstName(emailApp, scan);
         }
     }
 
+    // Get first name
     public String getFirstName() {
         return firstName;
     }
 
+    // Set first name
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    // Get and Set lastName
+    /* ------------------------------------------------------------ */
+
+    // Create last name
     public void createLastName(EmailApp emailApp, Scanner scan) {
         System.out.print("> Lastname: ");
         this.lastName = scan.nextLine();
@@ -134,19 +175,25 @@ public class Register {
         // Prevents empty input
         if(this.lastName.isEmpty()) {
             System.out.println("- Lastname field can not be empty! Please try again.\n");
+
+            // Recursion
             createLastName(emailApp, scan);
         }
     }
 
+    // Get last name
     public String getLastName() {
         return lastName;
     }
 
+    // Set last name
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    // Get and Set birthDay
+    /* ------------------------------------------------------------ */
+
+    // Create birhtday
     public void createBirthDay(EmailApp emailApp, Scanner scan) {
         System.out.println("- Birthday");
         String day;
@@ -186,13 +233,17 @@ public class Register {
         this.birthDay = day + "." + month + "." + year;
     }
 
+    // Get birthday
     public String getBirthDay() {
         return birthDay;
     }
 
+    // Set birthday
     public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
+
+    /* ------------------------------------------------------------ */
 
     // Print password stars
     public String printPasswordStars() {
@@ -202,4 +253,6 @@ public class Register {
         }
         return stars;
     }
+
+    /* ------------------------------------------------------------ */
 }

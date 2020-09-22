@@ -9,6 +9,8 @@ public class SignIn {
     EmailApp emailApp;
     Account account;
 
+    /* ------------------------------------------------------------ */
+
     // Constructor
     public SignIn(EmailApp emailApp) {
         this.emailApp = emailApp;
@@ -19,6 +21,8 @@ public class SignIn {
 
     }
 
+    /* ------------------------------------------------------------ */
+
     // Check if email exists or not
     public void checkEmail(EmailApp emailApp, Scanner scan) {
         System.out.print("\n> Email: ");
@@ -27,6 +31,8 @@ public class SignIn {
 
         if(email.isEmpty()) {
             System.out.println("- Email field can not be empty! Please try again.");
+
+            // Recursion
             checkEmail(emailApp, scan);
         } else {
             for(Account account: emailApp.getAccounts()) {
@@ -44,6 +50,8 @@ public class SignIn {
 
             if(!checkEmail) {
                 System.out.println("- This email does not exist! Please try again.");
+
+                // Recursion
                 checkEmail(emailApp, scan);
             }
         }
@@ -56,16 +64,22 @@ public class SignIn {
 
         if(password.isEmpty()) {
             System.out.println("- Password field can not be empty! Please try again.\n");
+
+            // Recursion
             checkPassword(emailApp, scan, account);
         } else {
             if(password.equals(account.getPassword())) {
                 this.account = account;
             } else {
                 System.out.println("- Wrong password! Please try again.\n");
+
+                // Recursion
                 checkPassword(emailApp, scan, account);
             }
         }
     }
+
+    /* ------------------------------------------------------------ */
 
     // Get account index
     public Account getAccount() {
@@ -76,4 +90,6 @@ public class SignIn {
     public boolean AdminOrNot() {
         return adminOrNot;
     }
+
+    /* ------------------------------------------------------------ */
 }
