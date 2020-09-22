@@ -9,19 +9,24 @@ public class Account {
     private String firstName;
     private String lastName;
     private String birthDay;
+    private String securityQuestion;
+    private String answer;
     private ArrayList<Mail> mailBox;
     private ArrayList<Mail> trashBin;
 
     /* ------------------------------------------------------------ */
 
     // Constructor
-    public Account(String email, String password, String phoneNumber, String firstName, String lastName, String birthDay) {
+    public Account(String email, String password, String phoneNumber, String firstName,
+                   String lastName, String birthDay, String securityQuestion, String answer) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDay = birthDay;
+        this.securityQuestion = securityQuestion;
+        this.answer = answer;
         this.mailBox = new ArrayList<Mail>();
         this.trashBin = new ArrayList<Mail>();
     }
@@ -96,6 +101,30 @@ public class Account {
     // Set birthDay
     public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
+    }
+
+    /* ------------------------------------------------------------ */
+
+    // Get security question
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    // Set securtiy question
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    /* ------------------------------------------------------------ */
+
+    // Get answer
+    public String getAnswer() {
+        return answer;
+    }
+
+    // Set answer
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     /* ------------------------------------------------------------ */

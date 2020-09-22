@@ -9,6 +9,8 @@ public class Register {
     private String firstName;
     private String lastName;
     private String birthDay;
+    private String securityQuestion;
+    private String answer;
     private Account account;
 
     /* ------------------------------------------------------------ */
@@ -20,22 +22,29 @@ public class Register {
         createEmail(emailApp, scan);
 
         // Get password from user
-        createPassword(emailApp, scan);
+        createPassword(scan);
 
         // Get phone number from user
-        createPhoneNumber(emailApp, scan);
+        createPhoneNumber(scan);
 
         // Get first name from user
-        createFirstName(emailApp, scan);
+        createFirstName(scan);
 
         // Get last name from user
-        createLastName(emailApp, scan);
+        createLastName(scan);
 
         // Get birthday from user
-        createBirthDay(emailApp, scan);
+        createBirthDay(scan);
+
+        // Get security question from user
+        createSecurityQuestion(scan);
+
+        // Get answer from question
+        createAnswer(scan);
 
         // Create and add new account
-        account = new Account(this.email, this.password, this.phoneNumber, this.firstName, this.lastName, this.birthDay);
+        account = new Account(this.email, this.password, this.phoneNumber, this.firstName,
+                this.lastName, this.birthDay, this.securityQuestion, this.answer);
         emailApp.addAccount(account);
 
         // Print account info after registration process
@@ -46,6 +55,8 @@ public class Register {
         System.out.println("> Firstname: " + this.firstName);
         System.out.println("> Lastname: " + this.lastName);
         System.out.println("> Birthday: " + this.birthDay);
+        System.out.println("> Security question: " + this.securityQuestion);
+        System.out.println("> Answer: " + this.answer);
 
         new AppMenus(emailApp);
     }
@@ -89,7 +100,7 @@ public class Register {
     /* ------------------------------------------------------------ */
 
     // Create password
-    public void createPassword(EmailApp emailApp, Scanner scan) {
+    public void createPassword(Scanner scan) {
         System.out.print("> Password: ");
         this.password = scan.nextLine();
 
@@ -98,7 +109,7 @@ public class Register {
             System.out.println("- Password field can not be empty! Please try again.\n");
 
             // Recursion
-            createPassword(emailApp, scan);
+            createPassword(scan);
         }
     }
 
@@ -115,7 +126,7 @@ public class Register {
     /* ------------------------------------------------------------ */
 
     // Create phoneNumber
-    public void createPhoneNumber(EmailApp emailApp, Scanner scan) {
+    public void createPhoneNumber(Scanner scan) {
         System.out.print("> Phone number: ");
         this.phoneNumber = scan.nextLine();
 
@@ -124,7 +135,7 @@ public class Register {
             System.out.println("- Phone number field can not be empty! Please try again.\n");
 
             // Recursion
-            createPhoneNumber(emailApp, scan);
+            createPhoneNumber(scan);
         }
 
     }
@@ -142,7 +153,7 @@ public class Register {
     /* ------------------------------------------------------------ */
 
     // Create first name
-    public void createFirstName(EmailApp emailApp, Scanner scan) {
+    public void createFirstName(Scanner scan) {
         System.out.print("> Firstname: ");
         this.firstName = scan.nextLine();
 
@@ -151,7 +162,7 @@ public class Register {
             System.out.println("- Firstname field can not be empty! Please try again.\n");
 
             // Recursion
-            createFirstName(emailApp, scan);
+            createFirstName(scan);
         }
     }
 
@@ -168,7 +179,7 @@ public class Register {
     /* ------------------------------------------------------------ */
 
     // Create last name
-    public void createLastName(EmailApp emailApp, Scanner scan) {
+    public void createLastName(Scanner scan) {
         System.out.print("> Lastname: ");
         this.lastName = scan.nextLine();
 
@@ -177,7 +188,7 @@ public class Register {
             System.out.println("- Lastname field can not be empty! Please try again.\n");
 
             // Recursion
-            createLastName(emailApp, scan);
+            createLastName(scan);
         }
     }
 
@@ -194,7 +205,7 @@ public class Register {
     /* ------------------------------------------------------------ */
 
     // Create birhtday
-    public void createBirthDay(EmailApp emailApp, Scanner scan) {
+    public void createBirthDay(Scanner scan) {
         System.out.println("- Birthday");
         String day;
         String month;
@@ -241,6 +252,58 @@ public class Register {
     // Set birthday
     public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
+    }
+
+    /* ------------------------------------------------------------ */
+
+    // Create security question
+    public void createSecurityQuestion(Scanner scan) {
+        System.out.print("> Security question: ");
+        this.securityQuestion = scan.nextLine();
+
+        // Prevents empty input
+        if(this.securityQuestion.isEmpty()) {
+            System.out.println("- Security question field can not be empty! Please try again.\n");
+
+            // Recursion
+            createSecurityQuestion(scan);
+        }
+    }
+
+    // Get security question
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    // Set security question
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    /* ------------------------------------------------------------ */
+
+    // Create answer
+    public void createAnswer(Scanner scan) {
+        System.out.print("> Answer: ");
+        this.answer = scan.nextLine();
+
+        // Prevents empty input
+        if(this.answer.isEmpty()) {
+            System.out.println("- Answer field can not be empty! Please try again.\n");
+
+            // Recursion
+            createAnswer(scan);
+        }
+    }
+
+    // Get answer
+    public String getAnswer() {
+        return answer;
+    }
+
+    // Set andwer
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     /* ------------------------------------------------------------ */

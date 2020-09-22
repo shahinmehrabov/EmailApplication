@@ -568,7 +568,9 @@ public class AppMenus {
         System.out.println("3. Change password");
         System.out.println("4. Change phone number");
         System.out.println("5. Change birthday");
-        System.out.println("6. Go back");
+        System.out.println("6. Change security question");
+        System.out.println("7. Change answer");
+        System.out.println("8. Go back");
         System.out.print("\n> Command: ");
         int command = scan.nextInt();
 
@@ -600,6 +602,16 @@ public class AppMenus {
                 changeBirthday(emailApp, scan, account, admin);
                 break;
             case 6:
+                // Change security question
+                scan.nextLine();
+                changeSecurityQuestion(emailApp, scan, account, admin);
+                break;
+            case 7:
+                // Change answer
+                scan.nextLine();
+                changeAnswer(emailApp, scan, account, admin);
+                break;
+            case 8:
                 // Print account menu
                 scan.nextLine();
                 printAccountMenu(emailApp, scan, account, admin);
@@ -776,6 +788,46 @@ public class AppMenus {
         account.setBirthDay(day + "." + month + "." + year);
 
         /// Print account settings
+        printAccountSettings(emailApp, scan, account, admin);
+    }
+
+    // Change security question
+    public void changeSecurityQuestion(EmailApp emailApp, Scanner scan, Account account, boolean admin) {
+        System.out.println("- Your current security question: " + account.getSecurityQuestion());
+        System.out.print("> New security question: ");
+        String securityQuestion = scan.nextLine();
+
+        while(securityQuestion.isEmpty()) {
+            System.out.println("- New security question field can not be empty! Please try again.\n");
+
+            // Recursion
+            changeSecurityQuestion(emailApp, scan, account, admin);
+        }
+
+        System.out.println("> Your new security question: " + securityQuestion);
+        account.setSecurityQuestion(securityQuestion);
+
+        // Print account settings
+        printAccountSettings(emailApp, scan, account, admin);
+    }
+
+    // Change answer
+    public void changeAnswer(EmailApp emailApp, Scanner scan, Account account, boolean admin) {
+        System.out.println("- Your current answer: " + account.getAnswer());
+        System.out.print("> New answer: ");
+        String answer = scan.nextLine();
+
+        while(answer.isEmpty()) {
+            System.out.println("- New answer field can not be empty! Please try again.\n");
+
+            // Recursion
+            changeAnswer(emailApp, scan, account, admin);
+        }
+
+        System.out.println("> Your new answer: " + answer);
+        account.setSecurityQuestion(answer);
+
+        // Print account settings
         printAccountSettings(emailApp, scan, account, admin);
     }
 
