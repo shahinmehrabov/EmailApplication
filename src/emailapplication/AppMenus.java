@@ -60,7 +60,7 @@ public class AppMenus {
     // Print accountMenu
     public void printAccountMenu(EmailApp emailApp, Scanner scan, Account account, boolean admin) {
         if(admin) {
-            // Print option
+            // Print options
             System.out.println("\n--- ACCOUNT MENU ---\n");
             System.out.println("- Welcome, " + account.getFirstName() + " " + account.getLastName() + "\n");
             System.out.println("1. Mail box (" + account.getMailBoxSize() + ")");
@@ -166,7 +166,9 @@ public class AppMenus {
         System.out.println("\n--- ADMIN PANEL ---\n");
         System.out.println("1. Users");
         System.out.println("2. Admins");
-        System.out.println("3. Go back");
+        System.out.println("3. Add new user");
+        System.out.println("4. Add new admin");
+        System.out.println("5. Go back");
         System.out.print("\n> Command: ");
         int command = scan.nextInt();
 
@@ -176,7 +178,14 @@ public class AppMenus {
         } else if(command == 2) {
             // Print admins list
             printAdmins(emailApp, scan, account, admin);
-        } else if(command ==3) {
+        } else if(command == 3) {
+            // Add new user
+            new Register(emailApp);
+        } else if(command == 4) {
+            // Add new admin
+            scan.nextLine();
+            addNewAdmin(emailApp, scan, account, admin);
+        } else if(command ==5) {
             // Print account menu
             printAccountMenu(emailApp, scan, account, admin);
         } else {
@@ -191,7 +200,8 @@ public class AppMenus {
     public void printUsers(EmailApp emailApp, Scanner scan, Account account, boolean admin) {
         System.out.println("\n- List of users\n");
         for(int i = 0; i < emailApp.getAccountsSize(); i++) {
-            System.out.println((i+1) + ". " + emailApp.getAccount(i).getEmail());
+            System.out.println((i+1) + ". " + emailApp.getAccount(i).getEmail() + "\t\t" +
+                    emailApp.getAccount(i).getFirstName() + "\t\t" + emailApp.getAccount(i).getLastName());
         }
 
         System.out.println("\n1. Delete account");
@@ -216,7 +226,8 @@ public class AppMenus {
     public void printAdmins(EmailApp emailApp, Scanner scan, Account account, boolean admin) {
         System.out.println("\n- List of admins\n");
         for(int i = 0; i < emailApp.getAdminsSize(); i++) {
-            System.out.println((i+1) + ". " + emailApp.getAccount(i).getEmail());
+            System.out.println((i+1) + ". " + emailApp.getAccount(i).getEmail() + "\t\t" +
+                    emailApp.getAccount(i).getFirstName() + "\t\t" + emailApp.getAccount(i).getLastName());
         }
         System.out.println();
 
@@ -243,6 +254,36 @@ public class AppMenus {
 
                 // Recursion
                 removeAccount(emailApp, scan, account, admin);
+            }
+        }
+    }
+
+    // Add new admin
+    public void addNewAdmin(EmailApp emailApp, Scanner scan, Account account, boolean admin) {
+        System.out.print("\n> Email: ");
+        String email = scan.nextLine();
+        boolean checkEmail = false;
+
+        if(email.isEmpty()) {
+            System.out.println("- Email field can not be empty! Please try again.");
+
+            // Recursion
+            addNewAdmin(emailApp, scan, account, admin);
+        } else {
+            for(Account acc: emailApp.getAccounts()) {
+                if(email.equals(acc.getEmail())) {
+                    emailApp.addAdmin(emailApp.getAccount(emailApp.getAccountIndexWithEmail(email)));
+                    System.out.println("- User successfully added to admins list.\n");
+                    checkEmail = true;
+                    printAdminPanel(emailApp, scan, account, admin);
+                }
+            }
+
+            if(!checkEmail) {
+                System.out.println("- This email is not exist! Please try again.");
+
+                // Recursion
+                addNewAdmin(emailApp, scan, account, admin);
             }
         }
     }
@@ -294,6 +335,8 @@ public class AppMenus {
 
                 // Print mail
                 String replyEmail = account.getMail(mailIndex - 1).getFromWho();
+                String replyText = "\n\t- " + account.getMail(mailIndex - 1).getText();
+                String replyTitle = account.getMail(mailIndex - 1).getTitle();
                 System.out.print("\nFrom who: " + account.getMail(mailIndex - 1).getFromWho());
                 System.out.println("\tTo who: " + account.getMail(mailIndex - 1).getToWho());
                 System.out.println("Title: " + account.getMail(mailIndex - 1).getTitle());
@@ -320,7 +363,7 @@ public class AppMenus {
                     } else if(mailCommand == 2) {
                         scan.nextLine();
                         // Reply mail
-                        replyMail(emailApp, scan, account, replyEmail, admin);
+                        replyMail(emailApp, scan, account, replyEmail, replyText, replyTitle, admin);
                     } else if(mailCommand == 3) {
                         // Print mailBox
                         printMailBox(emailApp, scan, account, admin);
@@ -410,22 +453,15 @@ public class AppMenus {
     }
 
     // Reply mail
-    public void replyMail(EmailApp emailApp, Scanner scan, Account account, String replyEmail, boolean admin) {
-        String title;
+    public void replyMail(EmailApp emailApp, Scanner scan, Account account, String replyEmail, String replyText, String replyTitle, boolean admin) {
         String text;
 
         // Print to who
         System.out.println("\n> To who: " + replyEmail);
 
-        // Get title and prevent empty input
-        do {
-            System.out.print("> Title: ");
-            title = scan.nextLine();
-
-            if(title.isEmpty()) {
-                System.out.println("- Title field can not be empty! Please try again.");
-            }
-        } while (title.isEmpty());
+        // Set and Print title
+        replyTitle = "Reply to: " + replyTitle;
+        System.out.println("> Title: " + replyTitle);
 
         // Get text and prevent empty input
         do {
@@ -437,7 +473,7 @@ public class AppMenus {
             }
         } while (text.isEmpty());
 
-        emailApp.getAccount(emailApp.getAccountIndexWithEmail(replyEmail)).addMail(new Mail(account.getEmail(), replyEmail, title, text));
+        emailApp.getAccount(emailApp.getAccountIndexWithEmail(replyEmail)).addMail(new Mail(account.getEmail(), replyEmail, replyTitle, text + replyText));
         System.out.println("\n- Mail sent.");
 
         // Print account menu
